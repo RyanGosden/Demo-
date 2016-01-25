@@ -17,10 +17,22 @@ var PersonModel = Backbone.Model.extend({
       }
 });
 
+var PersonCollection = Backbone.Collection.extend({
+
+model: PersonModel
+
+});
+
+
+
+
 
 var PersonView = Backbone.View.extend({
 
-id: 22,
+  // class : "list-group-item",
+  // tagName : "li",
+  // el : "list-group",
+
 
 initialize: function(){
 
@@ -31,7 +43,9 @@ this.render();
 
 render : function(){
 
-console.log(this.model.get("name"));
+this.collection.each(function(model) {
+  $(".list-group").append('<li class="list-group-item">' + model.get("name") + '</li>');
+  });
 
 }
 
@@ -41,12 +55,15 @@ console.log(this.model.get("name"));
 
 
 
-
 $(function(){
 
-var RyanModel = new PersonModel({name: "Ryan", surname: "Gosden", age : 27 });
-//RyanModel.save({name: "Ryan", surname: "Gosden", age : 27 });
-var RyanView = new PersonView({model: RyanModel});
+var person1 = new PersonModel({name: "Ryan", surname: "Gosden", age : 33 });
+var person2 = new PersonModel({name: "Michelle", surname: "Gosden", age : 34 });
+
+var personCollection = new PersonCollection ([person1, person2]);
+var personView = new PersonView({collection: personCollection});
+
+
 
 
 
